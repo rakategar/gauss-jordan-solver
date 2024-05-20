@@ -11,6 +11,7 @@ export default function Home() {
   ]);
   const [vector, setVector] = useState([0, 0, 0]);
   const [solution, setSolution] = useState(null);
+  const [steps, setSteps] = useState([]);
 
   const handleMatrixChange = (i, j, value) => {
     const newMatrix = matrix.map((row, rowIndex) =>
@@ -30,8 +31,9 @@ export default function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const result = gaussJordan(matrix, vector);
-    setSolution(result);
+    const { solution, steps } = gaussJordan(matrix, vector);
+    setSolution(solution);
+    setSteps(steps);
   };
 
   return (
@@ -52,7 +54,7 @@ export default function Home() {
                       type="number"
                       value={val}
                       onChange={(e) => handleMatrixChange(i, j, e.target.value)}
-                      className="input input-bordered w-16 mx-1 mb-2"
+                      className="input input-bordered w-16 mx-1"
                     />
                   ))}
                 </div>
@@ -72,18 +74,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          {solution && (
-            <div className="mt-4">
-              <h2 className="font-bold text-center">Solution</h2>
-              <div className="flex justify-center gap-4 mt-2">
-                {solution.map((val, i) => (
-                  <p key={i}>
-                    X{i + 1} = {val}
-                  </p>
-                ))}
-              </div>
-            </div>
-          )}
+
           <button
             type="submit"
             className="btn btn-accent text-white font-bold mx-auto mt-4 w-32"
@@ -91,6 +82,48 @@ export default function Home() {
             Solve
           </button>
         </form>
+        {solution && (
+          <div className="mt-8">
+            <h2 className="font-bold text-center">Solution</h2>
+            <div className="flex justify-center mt-2">
+              {solution.map((val, i) => (
+                <p key={i} className="mx-2">
+                  x<sub>{i + 1}</sub> = {val}
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
+        {steps.length > 0 && (
+          <div className="mt-8">
+            <h2 className="font-bold text-center">Iteration Steps</h2>
+            <div className="overflow-auto max-h-64">
+              {steps.map((step, stepIndex) => (
+                <div key={stepIndex} className="my-4">
+                  <h3 className="font-bold text-center">
+                    Step {stepIndex + 1}
+                  </h3>
+                  <table className="table-auto mx-auto">
+                    <tbody>
+                      {step.map((row, i) => (
+                        <tr key={i}>
+                          {row.map((val, j) => (
+                            <td
+                              key={j}
+                              className="border px-2 py-1 text-center"
+                            >
+                              {val.toFixed(2)}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <footer className="footer items-center p-4 bg-neutral text-neutral-content fixed bottom-0 w-full">
         <aside className="items-center grid-flow-col">
