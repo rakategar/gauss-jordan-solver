@@ -112,7 +112,7 @@ export default function Home() {
                               key={j}
                               className="border px-2 py-1 text-center"
                             >
-                              {val.toFixed(2)}
+                              {val?.toFixed(2)}
                             </td>
                           ))}
                         </tr>
