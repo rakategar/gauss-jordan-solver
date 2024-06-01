@@ -5,6 +5,8 @@ import { gaussElimination } from "../../../utils/gaus";
 import { gaussJordan } from "../../../utils/gausJordan";
 import { backSubstitution } from "../../../utils/backSubtitution";
 import Footer from "../../../utils/Footer";
+import Navbar from "../../../utils/Navbar";
+
 
 export default function Page() {
   const [matrix, setMatrix] = useState([
@@ -59,8 +61,13 @@ export default function Page() {
   };
 
   return (
+    <div>
+      <div className="sticky top-0">
+
+      <Navbar/>
+      </div>
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div className="px-20 py-8 bg-white shadow-lg rounded-lg">
+      <div className="px-20 py-8 bg-white shadow-lg rounded-lg mb-8">
         <h1 className="text-2xl font-bold text-white bg-primary flex justify-center p-4 rounded">
           Matrix Solver
         </h1>
@@ -170,7 +177,11 @@ export default function Page() {
           </div>
         )}
       </div>
+      <div className="fixed bottom-0">
+
       <Footer />
+      </div>
+    </div>
     </div>
   );
 }
